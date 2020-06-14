@@ -2,5 +2,5 @@
 Valve controller for well water spin down filter system
 
 #### Hardware
-Adafruit METRO 328
+Adafruit METRO 328  
 Onset AC Current Transformer CTV-A
