@@ -5,8 +5,9 @@ Valve controller for well water spin down filter system based on Adafruit METRO.
 ### Hardware
 
 Adafruit METRO 328 https://github.com/adafruit/Adafruit-METRO-328-PCB  
-Onset AC Current Transformer CTV-A https://www.onsetcomp.com/products/sensors/ctv-x
-Irritrol 700B-.75 https://www.irritrol.com/en/valves/700-series
+Adafruit nRF8001 Bluefruit LE Breakout https://www.adafruit.com/product/1697  
+Onset AC Current Transformer CTV-A https://www.onsetcomp.com/products/sensors/ctv-x  
+Irritrol 700B-.75 https://www.irritrol.com/en/valves/700-series  
 
 ### File Structure
 
