@@ -18,13 +18,14 @@ aci_evt_opcode_t laststatus = ACI_EVT_DISCONNECTED; // Initiate laststatus varia
 
 // red 5mm led: https://www.adafruit.com/product/297
 // select the pin for the LED
-int ledPin = 3;
+int ledPin = 4;
 
 // current sensor: Onset CTV-A 20Amp
 // output 0 - 2.5V
 int sensorPinCurrent = A1;    // select the input pin for the current sensor
-int sensorValueCurrent = 0;   // variable to store the value coming from the current sensor
-int limitValueCurrent = 500;  // threshold for valve actuation
+float sensorValueCurrent = 0.00;   // variable to store the value coming from the current sensor
+float sensorValueAmps = 0.00;      // variable to store sensor reading converted to amps
+float limitValueAmps = 0.00;  // threshold for valve actuation
 
 
 void setup() {
@@ -72,11 +73,17 @@ void loop() {
   // read value from analog pins
   sensorValueCurrent = analogRead(sensorPinCurrent);
 
+  // convert reading to amps
+  sensorValueAmps = (((sensorValueCurrent/1000)*5)/2.5)*20;
+  
+  // print to serial
+  Serial.println(sensorValueAmps);
+
   // print readings to UART
   if (status == ACI_EVT_CONNECTED) {
 
     // set message
-    String d = "Current: " + String(sensorValueCurrent) + "\n";
+    String d = String(sensorValueAmps) + "Amps" "\n";
 
     // We need to convert the line to bytes, no more than 20 at this time
     uint8_t sendbuffer[20];
@@ -89,7 +96,7 @@ void loop() {
 
   // Valve Actuation__________________
 
-  if (sensorValueCurrent < limitValueCurrent) {
+  if (sensorValueAmps > limitValueAmps) {
     // turn the LED on (HIGH is the voltage level), wait for one second
     digitalWrite(ledPin, HIGH);
     delay(5000);
@@ -97,6 +104,6 @@ void loop() {
   
   // turn the LED off by making the voltage LOW, wait for ten seconds
   digitalWrite(ledPin, LOW);
-  delay(10000);
+  delay(1000);
 
 }
